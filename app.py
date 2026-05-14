@@ -254,6 +254,6 @@ if run:
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="footer">
-    Penerapan Model mBART untuk Ringkasan Abstraktif Teks Berita Bahasa Indonesia · 2025
+    Penerapan Model mBART untuk Ringkasan Abstraktif Teks Berita Bahasa Indonesia
 </div>
 """, unsafe_allow_html=True)

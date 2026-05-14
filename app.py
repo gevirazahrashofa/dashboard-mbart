@@ -160,9 +160,8 @@ html, body, [class*="css"] {
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="header-wrap">
-    <div class="badge">mBART · IndoSum</div>
+    <div class="badge">mBART</div>
     <h1>📰 Ringkasan Berita Otomatis</h1>
-    <p>Abstraktif · Bahasa Indonesia · Tugas Akhir 2025</p>
 </div>
 """, unsafe_allow_html=True)
 

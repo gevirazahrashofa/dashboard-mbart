@@ -215,7 +215,7 @@ if run:
                         forced_bos_token_id=forced_bos,
                         max_length=200,
                         min_length=30,
-                        num_beams=4,
+                        num_beams=2,
                         length_penalty=2.0,
                         early_stopping=True,
                     )

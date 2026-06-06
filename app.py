@@ -177,7 +177,6 @@ def load_model():
 with st.spinner("⏳ Memuat model mBART, harap tunggu..."):
     try:
         tokenizer, model = load_model()
-        st.success("✅ Model berhasil dimuat!")
     except Exception as e:
         st.error(f"❌ Gagal memuat model: {e}")
         st.stop()

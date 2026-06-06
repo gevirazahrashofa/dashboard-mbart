@@ -5,7 +5,7 @@ import torch
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Ringkasan Berita · mBART",
-    page_icon="📰",
+    page_icon="",
     layout="centered",
 )
 
@@ -161,7 +161,7 @@ html, body, [class*="css"] {
 st.markdown("""
 <div class="header-wrap">
     <div class="badge">mBART</div>
-    <h1>📰 Ringkasan Berita Otomatis</h1>
+    <h1>Ringkasan Berita Otomatis</h1>
 </div>
 """, unsafe_allow_html=True)
 
@@ -174,11 +174,11 @@ def load_model():
     model.eval()
     return tokenizer, model
 
-with st.spinner("⏳ Memuat model mBART, harap tunggu..."):
+with st.spinner("Memuat model mBART, harap tunggu..."):
     try:
         tokenizer, model = load_model()
     except Exception as e:
-        st.error(f"❌ Gagal memuat model: {e}")
+        st.error(f"Gagal memuat model: {e}")
         st.stop()
 
 # ── Input ─────────────────────────────────────────────────────────────────────
@@ -196,15 +196,15 @@ with col2:
 # ── Generate ──────────────────────────────────────────────────────────────────
 if run:
     if not input_text.strip():
-        st.warning("⚠️ Teks berita tidak boleh kosong.")
+        st.warning("Teks berita tidak boleh kosong.")
     else:
-        with st.spinner("✍️ Sedang membuat ringkasan..."):
+        with st.spinner("Sedang membuat ringkasan..."):
             try:
                 tokenizer.src_lang = "id_ID"
                 inputs = tokenizer(
                     input_text,
                     return_tensors="pt",
-                    max_length=1024,
+                    max_length=512,  # <-- Disesuaikan dengan MAX_INPUT_LENGTH di notebook
                     truncation=True,
                 )
                 forced_bos = tokenizer.lang_code_to_id["id_ID"]
@@ -212,10 +212,11 @@ if run:
                     summary_ids = model.generate(
                         inputs["input_ids"],
                         forced_bos_token_id=forced_bos,
-                        max_length=200,
+                        max_new_tokens=256,       # <-- Disesuaikan dengan MAX_OUTPUT_LENGTH di notebook
                         min_length=30,
-                        num_beams=2,
+                        num_beams=4,              # <-- Dinaikkan dari 2 ke 4 agar kualitas bahasa lebih baik
                         length_penalty=2.0,
+                        no_repeat_ngram_size=2,   # <-- Ditambahkan agar kalimat tidak berulang
                         early_stopping=True,
                     )
                 summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
@@ -248,7 +249,7 @@ if run:
                 """, unsafe_allow_html=True)
 
             except Exception as e:
-                st.error(f"❌ Terjadi kesalahan saat generate: {e}")
+                st.error(f"Terjadi kesalahan saat generate: {e}")
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("""

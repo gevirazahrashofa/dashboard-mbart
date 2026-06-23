@@ -243,7 +243,7 @@ if run:
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">{compress}%</div>
-                        <div class="stat-label">Kompresi teks</div>
+                        <div class="stat-label">Rasio ringkasan</div>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
